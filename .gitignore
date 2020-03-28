@@ -13,7 +13,7 @@
 *.old
 *.db
 *.files
-*/src/
-*/pkg/
+src/
+pkg/
 vulkan-headers-git/
 vulkan-headers-tkg-git/
