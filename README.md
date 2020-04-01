@@ -4,3 +4,10 @@ https://github.com/KhronosGroup/Vulkan-Headers
 
 Arch can be a little slow on updating these, and AUR -git packages are incomplete, preventing us to build VKD3D using them.
 So here we go.
+
+
+```
+git clone https://github.com/Frogging-Family/vulkan-headers-git.git
+cd vulkan-headers-git
+makepkg -si
+```
