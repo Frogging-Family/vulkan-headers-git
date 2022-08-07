@@ -2,7 +2,7 @@
 # Modified by Tk-Glitch <ti3nou at gmail dot com> to target git instead of tagged releases
 
 pkgname=vulkan-headers-tkg-git
-pkgver=1.2.142.r0.gdb1a98c
+pkgver=1.3.224.r1.gc896e2f
 pkgrel=1
 pkgdesc="Vulkan header files"
 arch=(any)
@@ -15,9 +15,13 @@ groups=(vulkan-devel)
 source=("${pkgname}::git+https://github.com/KhronosGroup/Vulkan-Headers.git")
 sha256sums=('SKIP')
 
+prepare() {
+  cd "${pkgname}"
+  git checkout main
+}
+
 pkgver() {
   cd "${pkgname}"
-
   git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/^v//;s/\.rc/rc/;s/^wine\.//'
 }
 
