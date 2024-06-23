@@ -2,13 +2,13 @@
 # Modified by Tk-Glitch <ti3nou at gmail dot com> to target git instead of tagged releases
 
 pkgname=vulkan-headers-tkg-git
-pkgver=1.3.224.r1.gc896e2f
+pkgver=1.3.288.r6.ge3c37e6
 pkgrel=1
 pkgdesc="Vulkan header files"
 arch=(any)
 url="https://www.khronos.org/vulkan/"
 license=('APACHE')
-makedepends=(cmake git)
+makedepends=(cmake git ninja)
 provides=("vulkan-hpp=${pkgver}" "vulkan-headers=${pkgver}")
 conflicts=("vulkan-headers")
 groups=(vulkan-devel)
@@ -26,17 +26,18 @@ pkgver() {
 }
 
 build() {
-  cd "${pkgname}"
+  cd "$srcdir/${pkgname}" && rm -rf build
 
-  rm -rf build ; mkdir build ; cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/usr \
+  cmake -G Ninja -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
-    ..
-  make
+    -Wno-dev
+  cmake --build build
 }
 
 package() {
-  cd "${pkgname}"/build
+  cd "$srcdir/${pkgname}"
 
-  make DESTDIR="${pkgdir}" install
+  DESTDIR="${pkgdir}" cmake --install build
+  install -Dm644 -t "$pkgdir"/usr/share/licenses/$pkgname LICENSES/MIT.txt
 }
